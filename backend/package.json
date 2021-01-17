@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
+    "@elastic/elasticsearch": "^7.10.0",
     "express": "^4.17.1",
+    "lodash": "^4.17.20",
     "puppeteer": "^5.5.0",
     "request": "^2.88.2",
     "supervisor": "^0.12.0"

@@ -1,0 +1,19 @@
+{
+  "name": "t-bone-stock",
+  "version": "1.0.0",
+  "description": "t-bone-stock",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LHM0428/t-bone-stock.git"
+  },
+  "author": "LHM,KJH,KJM",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LHM0428/t-bone-stock/issues"
+  },
+  "homepage": "https://github.com/LHM0428/t-bone-stock#readme"
+}
