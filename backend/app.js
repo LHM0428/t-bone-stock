@@ -11,3 +11,4 @@ app.listen(PORT, () => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 var router = require('./router/main')(app);
+const testRouter = require('./router/test.js')(app);
