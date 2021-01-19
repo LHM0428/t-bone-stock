@@ -1,4 +1,6 @@
 const xlsxParser = require('../common/parser/xlsxParser');
+const elasticService = require('./elasticService');
+const request = require('request');
 
 var dartStockService = {
     updateFinancialStatements : async function() {
@@ -21,8 +23,12 @@ var dartStockService = {
             let obj = {'companyCode' : key, 'companyName' : value};
             companyArray.push(obj);
         });
-        
-        console.log(companyArray);
+        elasticService.insert(companyArray);
+
+        /*insert test*/
+        request('http://localhost:9200/tbonestock/fs/010660', (error, res, body) => {
+            console.log(body);
+        });
     }
 }
 

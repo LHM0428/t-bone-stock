@@ -1,7 +1,9 @@
 const upsert = require('./elastic/_upsert');
+const insert = require('./elastic/_insert');
 
 const elasticService = {
-  upsert : upsert
+  upsert : upsert,
+  insert : insert
    
   
 
