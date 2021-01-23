@@ -3,27 +3,25 @@ const { Client } = require('@elastic/elasticsearch')
 
 module.exports = async function upsert(body){
     const client = new Client({
-      node: 'https://localhost:9200',
+      node: 'http://127.0.0.1:9200',
       auth: {
         username: 'elastic',
-        password: 'changeme'
+        password: '04280215'
       }
     });
     
-    body.flatMap( data => [
-         { "update": { "_id" : data.stockCode, "retry_on_conflict": 3 }},
+    body = body.flatMap( data => [
+         { "update": { "_id" : `${data.category}${data.date}_${data.id}`, "retry_on_conflict": 3 }},
          { "doc": data, "doc_as_upsert" : true} 
     ])
 
-    console.log(body);
     let params = {
         index: 'tbonestock',
         body
     }
  
 
-    const { body: bulkResponse } = client.bulk(params);
-
+    const { body: bulkResponse } = await client.bulk(params);
     if (bulkResponse.errors) {
         const erroredDocuments = []
         // The items array has the same order of the dataset we just indexed.

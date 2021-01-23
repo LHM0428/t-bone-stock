@@ -5,12 +5,16 @@
   "main": "app.js",
   "dependencies": {
     "@elastic/elasticsearch": "^7.10.0",
+    "csv-parse": "^4.15.0",
     "csv-parser": "^3.0.0",
     "express": "^4.17.1",
+    "iconv-lite": "^0.6.2",
     "lodash": "^4.17.20",
+    "moment": "^2.29.1",
     "puppeteer": "^5.5.0",
     "request": "^2.88.2",
-    "supervisor": "^0.12.0"
+    "supervisor": "^0.12.0",
+    "xlsx": "^0.16.9"
   },
   "devDependencies": {},
   "scripts": {

@@ -1,5 +1,6 @@
 const daumParser = {
     parseAllStock : function(data){
+        console.log(`parse All Stock`);
         let bulkBody = [];
 
         for(const group of data){
@@ -28,12 +29,15 @@ const daumParser = {
 
                 return {
                     category: 'stock',
+                    id: symbolCode,
                     market,
                     sectorName,
                     sectorCode,
                     stockName: name,
                     stockCode: symbolCode,
                     price: tradePrice,
+                    changePrice,
+                    changeRate,
                     enterpriseCode : code,
                     accTradePrice,
                     accTradeVolume,

@@ -1,13 +1,25 @@
 const { Client } = require('@elastic/elasticsearch')
 
-module.exports = async function insert(bulkObj){
+module.exports = async function insert(dataArr){
     const client = new Client({
         node: 'http://localhost:9200',
         auth: {
           username: 'elastic',
-          password: 'changeme'
+          password: '04280215'
         }
       });
-      const result = await client.helpers.bulk(bulkObj);
-      console.log(result);
+      /*elasticSearch 전달 값 구성*/
+    const bulkObj = {
+      datasource: dataArr,
+      onDocument (doc) {
+        return {
+          index: { _index:'tbonestock',
+                    _type :'_doc',
+                    _id   : `${doc.category}${doc.date}_${doc.id}` }
+        }
+      }
+    };
+    
+    const result = await client.helpers.bulk(bulkObj);
+    console.log(result);
 }
