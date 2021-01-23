@@ -23,21 +23,6 @@ var dartRepository = {
         "ifrs-full_BasicEarningsLossPerShare": "fullBasicEarningsLossPerShare",
         "ifrs-full_DilutedEarningsLossPerShare": "fullDilutedEarningsLossPerShare"
     },
-    addCompanyCode : async function(companyArray){
-        /*elasticSearch 전달 값 구성*/
-        const bulkObj = {
-            datasource: companyArray,
-            onDocument (doc) {
-              return {
-                index: { _index:'fs1',
-                         _type :'company_code',
-                         _id   :doc.companyCode }
-              }
-            }
-        }        
-        /*insert*/
-        await elasticService.insert(bulkObj);
-    },
     addDartData : async function(fsArray, companyArray, quater){
         let companyMap = {},
         fsObj, companyCode, itemCode, value;
