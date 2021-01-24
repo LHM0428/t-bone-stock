@@ -15,7 +15,7 @@ module.exports = async function insert(dataArr){
         return {
           index: { _index:'tbonestock',
                     _type :'_doc',
-                    _id   : `${doc.category}${doc.date}_${doc.id}` }
+                    _id   : `${doc.category}_${doc.bizCode}_${doc.date}_${doc.id}` }
         }
       }
     };

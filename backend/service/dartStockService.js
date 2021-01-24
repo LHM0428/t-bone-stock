@@ -6,6 +6,14 @@ var dartStockService = {
         const xlsxObject = await dartParser.parseXlsxFile(filePath, fileName);
         const data = await dartParser.convertXlsxObjectToDocuments(xlsxObject, {quater, sheetName});
         await elasticService.insert(data);
+    },
+    getQuaterlyReport : async function(quater) {
+        let query = `   SELECT *
+                        FROM    tbonestock
+                        WHERE   category = 'quaterlyReport'
+                            AND bizCode = 'cashFlowStatement'`;
+        let data = elasticService.sqlQuery(query);
+        return data;
     }
 }
 

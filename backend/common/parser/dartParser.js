@@ -4,7 +4,7 @@ const parse  = require("csv-parse/lib/sync");
 const xlsx = require("xlsx");
 const moment = require('moment');
 
-const xlsxParser = {
+const dartParser = {
     parseXlsxFile : async function(filePath, fileName) {
         //엑셀 파싱
         // const resourcesDir = `${__dirname}/../../resources/dart/2020`;        
@@ -20,7 +20,7 @@ const xlsxParser = {
         }        
         return resData;
     },
-    csvToArray : async function(filePath, fileName) {
+    parseCsvFile : async function(filePath, fileName) {
         //csv 파싱
         const fileFullName = `${filePath}/${fileName}`;
         const csv = fs.readFileSync(fileFullName);
@@ -74,7 +74,14 @@ const xlsxParser = {
         "ifrs-full_CashFlowsFromUsedInInvestingActivities": "fullCashFlowsFromUsedInInvestingActivities",	
         "ifrs-full_CashFlowsFromUsedInFinancingActivities": "fullCashFlowsFromUsedInFinancingActivities",	
     },
+    _bizCodeMapper : {
+        "재무상태표"     : "financialStatement",
+        "포괄손익계산서" : "comprehensiveIncomeStatement",
+        "현금흐름표"     : "cashFlowStatement",
+    },
     convertXlsxObjectToDocuments : async function(xlsxObject, {quater, sheetName}){
+        /*비즈니스 코드 정의*/
+        let bizCode = this._bizCodeMapper[sheetName];
         const fsArray = xlsxObject[sheetName]; 
         /*기업 코드만 추출*/
         /*Map을 통해 중복 제거*/
@@ -116,10 +123,11 @@ const xlsxParser = {
                 ...companyMap[companyCode],
                 category: 'quaterlyReport',
                 id: companyCode,
+                bizCode: bizCode,
                 date: moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
             }
         }
         return companyArray;
     }
 }
-module.exports = xlsxParser;
+module.exports = dartParser;

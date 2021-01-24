@@ -15,6 +15,24 @@ function router (app){
         await dartStockService.updateFinancialStatements({ quater, fileName, sheetName});
         res.send('fetch test/dart');
     })
+
+    app.get('/test/dart/QuaterlyReport', async(req, res) => {
+        const quater = req.query.quater;
+        console.log('fetch test/dart/QuaterlyReport');
+        let data = await dartStockService.getQuaterlyReport({ quater});
+        let tag;
+        data.forEach(element => {
+            tag += '<div>';
+            let arr = Object.keys(element);
+            for(let i=0; i<arr.length; i++) {
+                let key = arr[i];
+                tag += `<div style="margin-left:100px;">${key}  :  ${element[key]}</div>`;
+            }
+            tag += '</div>';
+            tag += '<hr>';
+        });
+        res.send(tag);
+    })
 };
 
 module.exports = router;
