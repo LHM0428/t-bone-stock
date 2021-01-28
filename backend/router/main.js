@@ -1,9 +1,6 @@
 const daumStockService = require('../service/daumStockService');
 const fnguideService = require('../service/fnguideService')
 const elasticService = require('../service/elasticService');
-const http = require('http');
-const fs = require('fs');
-const puppeteer = require('puppeteer');
 
 function router (app){
     app.get('/updateStockPrice', async (req, res) => {
@@ -12,17 +9,19 @@ function router (app){
         //     console.log(resp)
         //     console.log(body);
         // })
-        elasticService.search();
         let market = req.query.market || 'KOSPI';
         let body = await daumStockService.getAllStockPrice(market);
         elasticService.upsert(body);
         res.send(`update ${market || 'KOSPI'} Stock Price complete!`);
     })
 
-    app.get('/updateCompanyConsensus', async (req, response) => {
-
-        fnguideService.getCompanyConsensus()
+    app.get('/updateCompanyConsensus', async (req, res) => {
         console.log('fetch Company Consensus');
+
+        let interval = req.query.interval;
+        fnguideService.getCompanyConsensus(interval);
+
+        res.send(`Stack All company's consensus.`);
     })
 };
 

@@ -1,5 +1,5 @@
 const { Client } = require('@elastic/elasticsearch')
-
+const moment = require('moment');
 
 module.exports = async function upsert(body){
     const client = new Client({
@@ -12,7 +12,10 @@ module.exports = async function upsert(body){
     
     body = body.flatMap( data => [
          { "update": { "_id" : `${data.category}${data.date}_${data.id}`, "retry_on_conflict": 3 }},
-         { "doc": data, "doc_as_upsert" : true} 
+         { "doc": {
+             ...data,
+             timestamp : moment(new Date()).valueOf()
+         }, "doc_as_upsert" : true} 
     ])
 
     let params = {
@@ -41,6 +44,7 @@ module.exports = async function upsert(body){
                 })
             }
         })
-        console.log(erroredDocuments)
+        return erroredDocuments;
     }
+    return body;
 }

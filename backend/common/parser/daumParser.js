@@ -1,7 +1,7 @@
 const daumParser = {
     parseAllStock : function(data){
-        console.log(`parse All Stock`);
-        let bulkBody = [];
+        console.log(`start parse All Stock`);
+        let bulkBody = [], stockMap = {};
 
         for(const group of data){
             let { accTradePrice, accTradeVolume, includedStocks, sectorName, market,
@@ -10,6 +10,7 @@ const daumParser = {
             if(change === 'FALL') changeRate *= -1;
             bulkBody.push({
                 category: 'sector',
+                id:sectorCode,
                 market,
                 sectorName,
                 sectorCode, 
@@ -22,32 +23,38 @@ const daumParser = {
             let parsedData = includedStocks.map( (stock) => {
                 let { accTradePrice, accTradeVolume, change, changePrice, changeRate,
                 code, foreignRatio, name, symbolCode, tradePrice} = stock;
+                
                 if(change === 'FALL') {
                     changeRate *= -1;
                     changePrice *= -1;
                 }
-
-                return {
-                    category: 'stock',
-                    id: symbolCode,
-                    market,
-                    sectorName,
-                    sectorCode,
-                    stockName: name,
-                    stockCode: symbolCode,
-                    price: tradePrice,
-                    changePrice,
-                    changeRate,
-                    enterpriseCode : code,
-                    accTradePrice,
-                    accTradeVolume,
-                    foreignRatio,
-                    date
-                };
+                if(stockMap[symbolCode]) {
+                    if(stockMap[symbolCode].sectorName && !stockMap[symbolCode].sectorName.includes(sectorName))
+                        stockMap[symbolCode].sectorName += `, ${sectorName}`;
+                }else{
+                    stockMap[symbolCode] = {
+                        category: 'stock',
+                        id: symbolCode,
+                        market,
+                        sectorName,
+                        sectorCode,
+                        companyName: name,
+                        companyCode: symbolCode,
+                        price: tradePrice,
+                        changePrice,
+                        changeRate,
+                        enterpriseCode : code,
+                        accTradePrice,
+                        accTradeVolume,
+                        foreignRatio,
+                        date
+                    };
+                }
+                return stockMap[symbolCode];
             });
-
             bulkBody = bulkBody.concat(parsedData);
         }
+        console.log(`finish parse All Stock`);
         return bulkBody;
     }
 }

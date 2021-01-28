@@ -16,9 +16,6 @@ module.exports = async function sqlQuery(query){
             "fetch_size" : 10000
         }
     });
-    
-    console.log(body)
-
     const data = body.rows.map(row => {
         const obj = {}
         for (var i = 0; i < row.length; i++) {
@@ -26,8 +23,5 @@ module.exports = async function sqlQuery(query){
         }
         return obj
     });
-
-    console.log(data);
-
     return data;
 }
