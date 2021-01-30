@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/LHM0428/t-bone-stock/issues"
   },
-  "homepage": "https://github.com/LHM0428/t-bone-stock#readme"
+  "homepage": "https://github.com/LHM0428/t-bone-stock#readme",
+  "dependencies": {
+    "@craco/craco": "^6.1.0"
+  }
 }

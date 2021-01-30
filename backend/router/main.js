@@ -22,7 +22,7 @@ function router (app){
         fnguideService.getCompanyConsensus(interval);
 
         res.send(`Stack All company's consensus.`);
-    })
+    });
 };
 
 module.exports = router;
