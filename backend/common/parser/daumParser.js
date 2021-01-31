@@ -21,7 +21,7 @@ const daumParser = {
             })
 
             let parsedData = includedStocks.map( (stock) => {
-                let { accTradePrice, accTradeVolume, change, changePrice, changeRate,
+                let { accTradePrice, accTradeVolume, change, changePrice, changeRate, marketCap,
                 code, foreignRatio, name, symbolCode, tradePrice} = stock;
                 
                 if(change === 'FALL') {
@@ -43,6 +43,7 @@ const daumParser = {
                         price: tradePrice,
                         changePrice,
                         changeRate,
+                        marketCap,
                         enterpriseCode : code,
                         accTradePrice,
                         accTradeVolume,
