@@ -1,17 +1,24 @@
 import React, { Component } from "react";
-import tbonestockImg from "../images/T-bone-Stock.png"
+import tbonestockImg from "../images/T-bone-Stock.png";
+import Body_Line from "./common/Body_Line";
+import Header_Frame from "./header/Header_Frame";
+import Search_Frame from "./search/Search_Frame";
+import Sector_Frame from "./sector/Sector_Frame";
 
+const App = () => {
 
-class App extends Component {
-  render() {
-    return <div>
-      <div class="header">
+  return(
+    <>
+      <div class="w-5/6 m-auto">
+        <Header_Frame />
       </div>
-
-      <div class="search">
+      <Body_Line />
+      <div class="w-5/6 m-auto">
+        <Search_Frame />
       </div>
-
-      <div class="sector">
+      <Body_Line />
+      <div class="w-5/6 m-auto mt-10">
+        <Sector_Frame />
       </div>
 
       <div class="tab-table">
@@ -19,8 +26,8 @@ class App extends Component {
 
       <div class="footer">
       </div>
-    </div>
-  }
-}
+    </>
+  );
+};
 
 export default App;
