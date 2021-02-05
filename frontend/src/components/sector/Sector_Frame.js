@@ -15,7 +15,7 @@ const Sector_Button = ({buttonName}) => {
 
 const Sector_Frame = () => {    
     return(
-        <div class="">
+        <div class="w-5/6 m-auto mt-10">
             <Sector_Info />
             <Sector_Button buttonName="업종 펼치기 >"/>
             <Sector />

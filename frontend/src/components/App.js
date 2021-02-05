@@ -9,17 +9,11 @@ const App = () => {
 
   return(
     <>
-      <div class="w-5/6 m-auto">
-        <Header_Frame />
-      </div>
+      <Header_Frame />
       <Body_Line />
-      <div class="w-5/6 m-auto">
-        <Search_Frame />
-      </div>
+      <Search_Frame />
       <Body_Line />
-      <div class="w-5/6 m-auto mt-10">
-        <Sector_Frame />
-      </div>
+      <Sector_Frame />
 
       <div class="tab-table">
       </div>
