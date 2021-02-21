@@ -17,7 +17,7 @@ function App() {
     <Router>
       <div>
         <Header />
-
+        <hr />
         <Switch>
           <Route exact path="/" component={IndexPage} />
           <Route exact path="/detail" component={DetailPage} />
