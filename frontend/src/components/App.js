@@ -1,27 +1,34 @@
-import React, { Component } from "react";
+import React from "react";
+import{
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
 import tbonestockImg from "../images/T-bone-Stock.png";
-import Body_Line from "./common/Body_Line";
-import Header_Frame from "./header/Header_Frame";
-import Search_Frame from "./search/Search_Frame";
-import Sector_Frame from "./sector/Sector_Frame";
+import Header from "./header/Heder";
+import IndexPage from "./index/IndexPage";
+import DetailPage from "./detail/DetailPage";
 
-const App = () => {
 
+function App() {
   return(
-    <>
-      <Header_Frame />
-      <Body_Line />
-      <Search_Frame />
-      <Body_Line />
-      <Sector_Frame />
-
-      <div class="tab-table">
+    <Router>
+      <div>
+        <Header />
+        
+        <Switch>
+          <Route exact path="/">
+            <IndexPage />
+          </Route>
+          <Route exact path="/detail">
+            <DetailPage />
+          </Route>
+        </Switch>
       </div>
+    </Router>
+  )
+}
 
-      <div class="footer">
-      </div>
-    </>
-  );
-};
-
-export default App;
+export default App
