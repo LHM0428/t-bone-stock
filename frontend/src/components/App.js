@@ -17,14 +17,10 @@ function App() {
     <Router>
       <div>
         <Header />
-        
+
         <Switch>
-          <Route exact path="/">
-            <IndexPage />
-          </Route>
-          <Route exact path="/detail">
-            <DetailPage />
-          </Route>
+          <Route exact path="/" component={IndexPage} />
+          <Route exact path="/detail" component={DetailPage} />
         </Switch>
       </div>
     </Router>
