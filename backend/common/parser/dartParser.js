@@ -12,12 +12,12 @@ const dartParser = {
         const fileFullName = `${filePath}/${fileName}`;
         const xfile = xlsx.readFile(fileFullName);
         const sheetnames = Object.keys(xfile.Sheets);
-        let i = sheetnames.length;
+        
         const resData = {};
-        while (i--) {
-            const sheetname = sheetnames[i];
-            resData[sheetname] = xlsx.utils.sheet_to_json(xfile.Sheets[sheetname]);
-        }        
+        // 파일별로 sheet 1개만 사용중
+        const sheetname = sheetnames[0];
+        resData[sheetname] = xlsx.utils.sheet_to_json(xfile.Sheets[sheetname]);
+        
         return resData;
     },
     parseCsvFile : async function(filePath, fileName) {
@@ -74,60 +74,55 @@ const dartParser = {
         "ifrs-full_CashFlowsFromUsedInInvestingActivities": "fullCashFlowsFromUsedInInvestingActivities",	
         "ifrs-full_CashFlowsFromUsedInFinancingActivities": "fullCashFlowsFromUsedInFinancingActivities",	
     },
-    _bizCodeMapper : {
-        "재무상태표"     : "financialStatement",
-        "포괄손익계산서" : "comprehensiveIncomeStatement",
-        "현금흐름표"     : "cashFlowStatement",
-    },
-    convertXlsxObjectToDocuments : async function(xlsxObject, {quater, sheetName}){
-        /*비즈니스 코드 정의*/
-        let bizCode = this._bizCodeMapper[sheetName];
-        const fsArray = xlsxObject[sheetName]; 
-        /*기업 코드만 추출*/
-        /*Map을 통해 중복 제거*/
-        const tempCompanyMap = new Map();
-        const companyArray = new Array();
-        fsArray.forEach(obj => {
+
+    convertXlsxObjectToDocuments : async function(xlsxObjects, {year, quater, sheetName, bizCode}) {
+
+        const xlsxObject = xlsxObjects[sheetName];
+        
+        let companyArray = [];
+        let tempCompanyMap = {};
+        let companyMap = {};
+        
+        xlsxObject.forEach(obj => {
             let companyCode = obj['종목코드'].replace('[', '').replace(']',''); /*최초 [001040] 형태*/
-            let companyName = obj['회사명'];
-            if(!tempCompanyMap.has(companyCode)) {
-                tempCompanyMap.set(companyCode, companyName);
+            let companyName = obj['회사명'];        
+            if(!(tempCompanyMap[companyCode])) {
+                tempCompanyMap[companyCode] = companyName;
+
+                companyMap[companyCode] = {};
+                
                 let obj = {'companyCode' : companyCode, 'companyName' : companyName};
                 companyArray.push(obj);
             }
         });
-
-        let companyMap = {},
-            fsObj, companyCode, itemCode, value;
-
-        /*Object로 변환*/
-        for(let i=0; i<companyArray.length; i++) {
-            let { companyCode } = companyArray[i];
-            companyMap[companyCode] = {};
-        }
-        for(let j=0; j<fsArray.length; j++) {
-            fsObj = fsArray[j];
-            if(this._codeMapper[fsObj['항목코드']]){
-                companyCode = fsObj['종목코드'].replace('[', '').replace(']',''); /*최초 [001040] 형태*/
-                itemCode = this._codeMapper[fsObj['항목코드']];
-                value = fsObj[quater];
+        
+        let dataRow, companyCode, itemCode, value;
+        for(let j=0; j<xlsxObject.length; j++) {
+            dataRow = xlsxObject[j];
+            if(this._codeMapper[dataRow['항목코드']]){
+                companyCode = dataRow['종목코드'].replace('[', '').replace(']',''); /*최초 [001040] 형태*/
+                itemCode = this._codeMapper[dataRow['항목코드']];
+                value = dataRow[quater];
 
                 companyMap[companyCode][itemCode] = value;
             }
-        } 
-
+        }         
+        
+        let documents = [];
         for(let i=0; i<companyArray.length; i++) {
             let { companyCode } = companyArray[i];
-            companyArray[i] = {
+            documents[i] = {
                 ...companyArray[i],
                 ...companyMap[companyCode],
                 category: 'quaterlyReport',
                 id: companyCode,
                 bizCode: bizCode,
+                year: year,
+                quater: quater,
                 date: moment(new Date()).format('YYYY-MM-DD HH:mm:ss')
             }
         }
-        return companyArray;
+        return documents;
     }
 }
 module.exports = dartParser;
