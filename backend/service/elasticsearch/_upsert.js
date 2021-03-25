@@ -11,7 +11,7 @@ module.exports = async function upsert(body){
     });
     
     body = body.flatMap( data => [
-         { "update": { "_id" : `${data.category}${data.date}_${data.id}`, "retry_on_conflict": 3 }},
+         { "update": { "_id" : `${data.id}`, "retry_on_conflict": 3 }},
          { "doc": {
              ...data,
              timestamp : moment(new Date()).valueOf()

@@ -1,4 +1,7 @@
-const daumParser = {
+const { OPERATING_INCOME_LOSS } = require('../constant');
+const constatns = require('../constant');
+
+const stockParser = {
     parseAllStock : function(data){
         console.log(`start parse All Stock`);
         let bulkBody = [], stockMap = {};
@@ -41,6 +44,7 @@ const daumParser = {
                         companyName: name,
                         companyCode: symbolCode,
                         price: tradePrice,
+                        numOfStocks: marketCap/tradePrice,
                         changePrice,
                         changeRate,
                         marketCap,
@@ -57,7 +61,9 @@ const daumParser = {
         }
         console.log(`finish parse All Stock`);
         return bulkBody;
-    }
+    },
+
+    
 }
 
-module.exports = daumParser;
+module.exports = stockParser;

@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
-const daumParser = require('../common/parser/daumParser');
+const stockParser = require('../common/parser/stockParser');
+
 var daumStockService = {
     getAllStockPrice : async function(market) {
         const browser = await puppeteer.launch({headless: true});
@@ -12,7 +13,7 @@ var daumStockService = {
         });
         const {data} = await response.json();
 
-        return daumParser.parseAllStock(data);
+        return stockParser.parseAllStock(data);
     }
 }
 
