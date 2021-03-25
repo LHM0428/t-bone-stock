@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8281",
   "dependencies": {
     "@craco/craco": "^6.1.0",
     "@tailwindcss/postcss7-compat": "^2.0.2",
@@ -9,7 +10,9 @@
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.2",
     "autoprefixer": "^9.8.6",
+    "axios": "^0.21.1",
     "cross-env": "^7.0.3",
+    "http-proxy-middleware": "^1.0.6",
     "node-sass": "^4.14.1",
     "postcss": "^7.0.35",
     "react": "^17.0.1",
@@ -17,6 +20,7 @@
     "react-icons": "^4.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "react-table": "^7.6.3",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
     "web-vitals": "^0.2.4"
   },

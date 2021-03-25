@@ -13,7 +13,7 @@ const stockParser = {
             if(change === 'FALL') changeRate *= -1;
             bulkBody.push({
                 category: 'sector',
-                id:sectorCode,
+                id:`${sectorCode}`,
                 market,
                 sectorName,
                 sectorCode, 
@@ -37,7 +37,7 @@ const stockParser = {
                 }else{
                     stockMap[symbolCode] = {
                         category: 'stock',
-                        id: symbolCode,
+                        id: `symbolCode`,
                         market,
                         sectorName,
                         sectorCode,
