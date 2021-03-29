@@ -1,13 +1,17 @@
+const fileParser = require('../common/parser/fileParser');
 const dartParser = require('../common/parser/dartParser');
 const elasticService = require('../service/elasticsearch');
 var dartStockService = {
-    updateFinancialStatements : async function({year, quater, fileName, bizCode }) {
-        const filePath = `${__dirname}/../../resources/dart/2020`;
-        const xlsxObject = await dartParser.parseXlsxFile(filePath, fileName);
-        const sheetName = (Object.keys(xlsxObject))[0]
-        const documents = await dartParser.convertXlsxObjectToDocuments(xlsxObject, {year, quater, sheetName, bizCode});
-        await elasticService.insert(documents);
+    addQuaterlyReport : async function({ fileName, year, quater }) {
+        const filePath = `dart/${year}`;
+        const xlsxObject= await fileParser.parseXlsxFile(filePath, fileName);
+        const companyReports = await fileParser.getCompanyReportsOf(xlsxObject);
+        const allCompanyNameObject = await dartParser.getAllCompanyNameObjectOf(companyReports);
+        const elasticDocument = await dartParser.getElasticDocumentOf(companyReports, allCompanyNameObject, {year, quater});
+        const response = await elasticService.upsert(elasticDocument);
+        return response;
     },
+    /*
     getYearlyReport : async function({bizCode, year}) {
         let query = `   SELECT *
                         FROM    tbonestock
@@ -17,16 +21,7 @@ var dartStockService = {
         let data = elasticService.sqlQuery(query);
         return data;
     },
-    getQuaterlyReport : async function({bizCode, year, quater}) {
-        let query = `   SELECT *
-                        FROM    tbonestock
-                        WHERE   category = 'quaterlyReport'
-                            AND bizCode = '${bizCode}'
-                            AND year = '${year}'
-                            AND quater = '${quater}' `;
-        let data = elasticService.sqlQuery(query);
-        return data;
-    },
+    */
 }
 
 module.exports = dartStockService;
