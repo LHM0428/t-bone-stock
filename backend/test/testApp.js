@@ -6,6 +6,7 @@ const testModuleObject = {
     'common'  : [
         'parser/fileParserTest',
         'parser/dartParserTest',
+        'util/dateUtilTest',
     ],
     'service' : [
 

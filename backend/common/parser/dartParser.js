@@ -32,8 +32,8 @@ const dartParser = {
         return documents;
     },
     getVerifiedCorporateReportsOf : async function(corporateReports) {
-        const firstIndexRowData = corporateReports[0];
-        const valueCode = await this.getValueCode(firstIndexRowData);
+        const secondIndexRowData = corporateReports[1];
+        const valueCode = await this.getValueCode(secondIndexRowData);
 
         let companiesObject = {};
         for(let i = 0; i < corporateReports.length; i++) {

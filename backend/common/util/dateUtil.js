@@ -1,6 +1,7 @@
 const moment = require('moment');
 const dateUtil = {
     'STRICT_DATE_OPIONAL_TIME_FORMAT' : 'YYYY-MM-DDTHH:mm:ss',
+    'TIMESTAMP_FORMAT' : 'YYYY-MM-DD HH:mm:ss:SSS',
 
     getQuarterBeforeMonths: function(i = 1){
         return moment().subtract(i, 'months').quarter();
@@ -20,6 +21,9 @@ const dateUtil = {
 
         if(currentHour < 16) return moment().add(-1, 'days').startOf('day').format(format);
         else return moment().startOf('day').format(format);
+    },
+    getCurrentTimeStamp: function() {
+        return moment().format(this.TIMESTAMP_FORMAT);
     }
 }
 
