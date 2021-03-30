@@ -18,20 +18,20 @@ module.exports = async function fileParserTest() {
 
     }());
 
-    // getFirstSheetObjectFromXlsxObject test
-    await (async function getReportOf(){
+    // getCompanyReportsOf test
+    await (async function getCorporateReportsOf(){
         //given
         const filePath = 'dart/2020';
         const fileName = '2020_1분기보고서_손익계산서_PL.xlsx';
         const xlsxObject = await fileParser.parseXlsxFile(filePath, fileName);
 
         //when
-        const companyReports = await fileParser.getCompanyReportsOf(xlsxObject);
+        const corporateReports = await fileParser.getCorporateReportsOf(xlsxObject);
 
         //then
-        console.log(companyReports !== null);
-        console.log(companyReports instanceof Array);
-        console.log(companyReports[0] instanceof Object);
+        console.log(corporateReports !== null);
+        console.log(corporateReports instanceof Array);
+        console.log(corporateReports[0] instanceof Object);
 
     }());
     

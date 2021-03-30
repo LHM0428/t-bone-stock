@@ -17,9 +17,12 @@ const fileParser = {
         
         return responseObejct;
     },
-    getCompanyReportsOf : async function(xlxsObject) {
-        return await this.getFirstSheetsFromXlsxObject(xlxsObject);
+    getCorporateReportsOf : async function(xlxsObject) {
+        return await _privateFileParser.getFirstSheetsFromXlsxObject(xlxsObject);
     },
+}
+
+const _privateFileParser = {
     getFirstSheetsFromXlsxObject : async function(xlxsObject) {
         const FIRST_SHEET_INDEX = 0;
         const xlxsObjectKeys = Object.keys(xlxsObject)

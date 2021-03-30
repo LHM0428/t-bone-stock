@@ -30,10 +30,10 @@ function api(app){
         res.send(await stockService.getRecentStocksBySectorName(sectorName));
     })
 
-    app.post('/dart/report/quater', async (req, res) => {
-        console.log('update /dart/report/quater');
-        let { fileName, year, quater } = req.query;
-        res.send(await dartService.addQuaterlyReport({ fileName, year, quater }));
+    app.post('/report/quarter', async (req, res) => {
+        console.log('post report quarter');
+        let { fileName, year, quarter } = req.query;
+        res.send(await dartService.addQuarterlyReport({ fileName, year, quarter }));
     })
 }
 

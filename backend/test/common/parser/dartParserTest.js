@@ -12,11 +12,11 @@ module.exports = async function dartParserTest() {
         const filePath = 'dart/2020';
         const fileName = '2020_1분기보고서_손익계산서_PL.xlsx';
         const xlsxObject = await fileParser.parseXlsxFile(filePath, fileName);
-        const companyReports = await fileParser.getCompanyReportsOf(xlsxObject);
+        const corporateReports = await fileParser.getCorporateReportsOf(xlsxObject);
 
         
         // when
-        const allCompanyNameObject = await dartParser.getAllCompanyNameObjectOf(companyReports);
+        const allCompanyNameObject = await dartParser.getAllCompanyNameObjectOf(corporateReports);
         
         // then
         console.log(allCompanyNameObject.length !== null);
@@ -31,10 +31,10 @@ module.exports = async function dartParserTest() {
         const fileName = '2020_1분기보고서_손익계산서_PL.xlsx';
         
         const xlsxObject = await fileParser.parseXlsxFile(filePath, fileName);
-        const companyReports = await fileParser.getCompanyReportsOf(xlsxObject);
+        const corporateReports = await fileParser.getCorporateReportsOf(xlsxObject);
         
         // when
-        const firstIndexRowData = companyReports[0];
+        const firstIndexRowData = corporateReports[0];
         let valueCode = await dartParser.getValueCode(firstIndexRowData);
         
         // then
@@ -44,21 +44,21 @@ module.exports = async function dartParserTest() {
 
     }());
 
-    (async function getValidationObejctOf(){
+    (async function getVerifiedCorporateReportsOf(){
         // given
         const filePath = 'dart/2020';
         const fileName = '2020_1분기보고서_손익계산서_PL.xlsx';
         
         const xlsxObject = await fileParser.parseXlsxFile(filePath, fileName);
-        const companyReports = await fileParser.getCompanyReportsOf(xlsxObject);
+        const corporateReports = await fileParser.getCorporateReportsOf(xlsxObject);
         
         // when
-        const companiesObject = await dartParser.getValidationObejctOf(companyReports);
+        const verifiedCorporateReports = await dartParser.getVerifiedCorporateReportsOf(corporateReports);
         
-        console.log(companiesObject !== null);
-        console.log(companiesObject instanceof Object);
-        console.log(companiesObject[LG_INNOTEK_CODE] !== null);
-        console.log(companiesObject[LG_INNOTEK_CODE] instanceof Object);
+        console.log(verifiedCorporateReports !== null);
+        console.log(verifiedCorporateReports instanceof Object);
+        console.log(verifiedCorporateReports[LG_INNOTEK_CODE] !== null);
+        console.log(verifiedCorporateReports[LG_INNOTEK_CODE] instanceof Object);
         
     }());
 
@@ -68,19 +68,23 @@ module.exports = async function dartParserTest() {
         const fileName = '2020_1분기보고서_손익계산서_PL.xlsx';
         
         const xlsxObject = await fileParser.parseXlsxFile(filePath, fileName);
-        const companyReports = await fileParser.getCompanyReportsOf(xlsxObject);
-        const allCompanyNameObject = await dartParser.getAllCompanyNameObjectOf(companyReports);
-        
+        const corporateReports = await fileParser.getCorporateReportsOf(xlsxObject);
+        const verifiedCorporateReports = await dartParser.getVerifiedCorporateReportsOf(corporateReports);
+        const allCompanyNameObject = await dartParser.getAllCompanyNameObjectOf(corporateReports);
         const dateObject = {
             year : '2020',
             quater : '1Q'
         }
 
         // when
-        const elasticDocument = await dartParser.getElasticDocumentOf(companyReports, allCompanyNameObject, dateObject);
+        const elasticDocument = await dartParser.getElasticDocumentOf(verifiedCorporateReports, allCompanyNameObject, dateObject);
 
-        console.log(elasticDocument);
-        
+        console.log(elasticDocument !== null);
+        console.log(elasticDocument instanceof Array);
+        console.log(elasticDocument[0] !== null);
+        console.log(elasticDocument[0] instanceof Object);
+        console.log(elasticDocument[0]["id"] !== null);
+
     }());
     
 }
