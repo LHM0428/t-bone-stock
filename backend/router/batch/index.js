@@ -12,8 +12,8 @@ function batch(app){
         // })
         let market = req.query.market || 'KOSPI';
         let body = await daumStockService.getAllStockPrice(market);
-        elasticService.upsert(body);
-        res.send(`update ${market || 'KOSPI'} Stock Price complete!`);
+        let response = await elasticService.upsert(body);
+        res.send(`update ${market || 'KOSPI'} Stock Price complete! \n ${JSON.stringify(response)}`);
     })
     
     app.get('/updateCompanyConsensus/yearly', async (req, res) => {

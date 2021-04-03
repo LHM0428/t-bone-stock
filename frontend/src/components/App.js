@@ -10,6 +10,7 @@ import tbonestockImg from "../images/T-bone-Stock.png";
 import Header from "./header/Heder";
 import IndexPage from "./index/IndexPage";
 import DetailPage from "./detail/DetailPage";
+import Home from '../domain/Home/Home'
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
         <Header />
         <hr />
         <Switch>
-          <Route exact path="/" component={IndexPage} />
+          <Route exact path="/" component={Home} />
           <Route exact path="/detail" component={DetailPage} />
         </Switch>
       </div>

@@ -14,7 +14,7 @@ module.exports = async function upsert(body){
          { "update": { "_id" : `${data.id}`, "retry_on_conflict": 3 }},
          { "doc": {
              ...data,
-             timestamp : dateUtil.getCurrentTimeStamp()
+             timestamp : dateUtil.getTimestampValue()
          }, "doc_as_upsert" : true} 
     ])
 

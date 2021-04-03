@@ -20,7 +20,9 @@ const CONSENSUS_KEY = {
     BPS: 'BPS',
     DPS: 'DPS',
     PER: 'PER',
-    PBR: 'PBR'
+    PBR: 'PBR',
+    PSR: 'PSR',
+    ROA: 'ROA'
 }
 
 module.exports = CONSENSUS_KEY;

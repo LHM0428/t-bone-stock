@@ -37,7 +37,10 @@ const dateUtil = {
     },
     getCurrentTimeStampWithFormat: function(format = this.TIMESTAMP_FORMAT) {
         return moment().format(format);
-    }
+    },
+    getTimestampValue: () => {
+        return moment().valueOf();
+    }    
 }
 
 
